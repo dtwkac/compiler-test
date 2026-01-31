@@ -343,7 +343,7 @@ jobs:
           df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
           echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
           date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
-          echo $'#include <iostream>\nint main() { std::cout<<"Hello World!\\n"; return 0; }' > ${GITHUB_WORKSPACE}/main.cpp
+          echo $'#include <iostream>\nint main() {\n    std::cout<<"Hello World!\\n";\n    return 0;\n}' > ${GITHUB_WORKSPACE}/main.cpp
           ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ -o ${GITHUB_WORKSPACE}/a.out ${GITHUB_WORKSPACE}/main.cpp
           ${GITHUB_WORKSPACE}/a.out >> ${GITHUB_WORKSPACE}/${LOG_FILE}
 
@@ -616,7 +616,7 @@ jobs:
           df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
           echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
           date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
-          echo $'#include <iostream>\nint main() { std::cout<<"Hello World!\\n"; return 0; }' > ${GITHUB_WORKSPACE}/main.cpp
+          echo $'#include <iostream>\nint main() {\n    std::cout<<"Hello World!\\n";\n    return 0;\n}' > ${GITHUB_WORKSPACE}/main.cpp
           ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ --sysroot=$(xcrun --sdk macosx --show-sdk-path) -o ${GITHUB_WORKSPACE}/a.out ${GITHUB_WORKSPACE}/main.cpp
           ${GITHUB_WORKSPACE}/a.out >> ${GITHUB_WORKSPACE}/${LOG_FILE}
 
