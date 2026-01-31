@@ -337,7 +337,7 @@ jobs:
           df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
           echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
           date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
-          echo $'#include <bits/stdc++.h>\nint main() { std::cout<<"Hello World!\\n"; return 0; }' > ${GITHUB_WORKSPACE}/main.cpp
+          echo $'#include <iostream>\nint main() {\n    std::cout<<"Hello World!\\n";\n    return 0;\n}' > ${GITHUB_WORKSPACE}/main.cpp
           ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ \
             -B${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc \
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/include \
