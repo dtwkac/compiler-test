@@ -1,0 +1,388 @@
+name: gcc
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  schedule:
+    - cron: '0 15 * * *'
+
+  push:
+    paths:
+      - '.github/workflows/gcc.yml'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # gcc-master-make:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     NAME: gcc-master-make
+  #     LOG_FILE: gcc-master-make.log
+  #   steps:
+  #     - name: ${{ env.NAME }}
+  #       run: |
+  #         set -e
+  #         sudo apt-get update
+  #         sudo apt-get install -y git g++ libmpc-dev make flex
+  #         echo -e "\033[32m------------------------------ ${NAME} ------------------------------\033[0m" > ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mstart:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32msystem info:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mpwd:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         pwd >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mlscpu:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         lscpu >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mnproc:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         nproc >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mfree -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         free -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32muname -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         uname -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mlsb_release -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         lsb_release -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         git clone https://github.com/gcc-mirror/gcc.git
+  #         cd gcc
+  #         mkdir build
+  #         cd build
+  #         ../configure --disable-multilib
+  #         echo -e "\033[32mtime make:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         (time make 2>/dev/null) 2>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32m${GITHUB_WORKSPACE}/gcc/build/gcc/xg++ --version:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         ${GITHUB_WORKSPACE}/gcc/build/gcc/xg++ --version >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32m${GITHUB_WORKSPACE}/gcc/build/gcc/xg++ -v:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         ${GITHUB_WORKSPACE}/gcc/build/gcc/xg++ -v &>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mdu -sh ${GITHUB_WORKSPACE}/gcc:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         du -sh ${GITHUB_WORKSPACE}/gcc >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+  #         date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+
+  #     - name: Upload ${{ env.LOG_FILE }}
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: ${{ env.NAME }}
+  #         path: ${{ github.workspace }}/${{ env.LOG_FILE }}
+
+  gcc-master-make-j:
+    runs-on: ubuntu-latest
+    env:
+      NAME: gcc-master-make-j
+      LOG_FILE: gcc-master-make-j.log
+    steps:
+      - name: ${{ env.NAME }}
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y git g++ libmpc-dev make flex
+          echo -e "\033[32m------------------------------ ${NAME}$(nproc) ------------------------------\033[0m" > ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mstart:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32msystem info:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mpwd:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          pwd >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlscpu:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lscpu >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mnproc:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          nproc >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mfree -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          free -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32muname -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          uname -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlsb_release -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lsb_release -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          git clone https://github.com/gcc-mirror/gcc.git
+          cd gcc
+          mkdir build
+          cd build
+          ../configure --disable-multilib
+          echo -e "\033[32mtime make -j$(nproc):\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          (time make -j$(nproc) 2>/dev/null) 2>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc/build/gcc/xg++ --version:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc/build/gcc/xg++ --version >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc/build/gcc/xg++ -v:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc/build/gcc/xg++ -v &>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdu -sh ${GITHUB_WORKSPACE}/gcc:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          du -sh ${GITHUB_WORKSPACE}/gcc >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+
+      - name: Upload ${{ env.LOG_FILE }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}
+          path: ${{ github.workspace }}/${{ env.LOG_FILE }}
+
+  gcc-12-3-0-make:
+    runs-on: ubuntu-latest
+    env:
+      NAME: gcc-12.3.0-make
+      LOG_FILE: gcc-12.3.0-make.log
+      GCC_VERSION: 12.3.0
+    steps:
+      - name: ${{ env.NAME }}
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y curl g++ libmpc-dev make flex
+          echo -e "\033[32m------------------------------ ${NAME} ------------------------------\033[0m" > ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mstart:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32msystem info:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mpwd:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          pwd >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlscpu:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lscpu >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mnproc:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          nproc >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mfree -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          free -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32muname -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          uname -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlsb_release -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lsb_release -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          curl -fsSL -O https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${GCC_VERSION}.tar.gz
+          tar -zxf gcc-${GCC_VERSION}.tar.gz
+          rm gcc-${GCC_VERSION}.tar.gz
+          cd gcc-releases-gcc-${GCC_VERSION}
+          mkdir build
+          cd build
+          ../configure --disable-multilib
+          echo -e "\033[32mtime make:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          (time make 2>/dev/null) 2>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v &>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdu -sh ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          du -sh ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION} >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+
+      - name: Upload ${{ env.LOG_FILE }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}
+          path: ${{ github.workspace }}/${{ env.LOG_FILE }}
+
+  gcc-12-3-0-make-j:
+    runs-on: ubuntu-latest
+    env:
+      NAME: gcc-12.3.0-make-j
+      LOG_FILE: gcc-12.3.0-make-j.log
+      GCC_VERSION: 12.3.0
+    steps:
+      - name: ${{ env.NAME }}
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y curl g++ libmpc-dev make flex
+          echo -e "\033[32m------------------------------ ${NAME}$(nproc) ------------------------------\033[0m" > ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mstart:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32msystem info:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mpwd:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          pwd >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlscpu:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lscpu >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mnproc:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          nproc >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mfree -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          free -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32muname -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          uname -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlsb_release -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lsb_release -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          curl -fsSL -O https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${GCC_VERSION}.tar.gz
+          tar -zxf gcc-${GCC_VERSION}.tar.gz
+          rm gcc-${GCC_VERSION}.tar.gz
+          cd gcc-releases-gcc-${GCC_VERSION}
+          mkdir build
+          cd build
+          ../configure --disable-multilib
+          echo -e "\033[32mtime make -j$(nproc):\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          (time make -j$(nproc) 2>/dev/null) 2>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v &>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdu -sh ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          du -sh ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION} >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+
+      - name: Upload ${{ env.LOG_FILE }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}
+          path: ${{ github.workspace }}/${{ env.LOG_FILE }}
+
+  gcc-15-2-0-make:
+    runs-on: ubuntu-latest
+    env:
+      NAME: gcc-15.2.0-make
+      LOG_FILE: gcc-15.2.0-make.log
+      GCC_VERSION: 15.2.0
+    steps:
+      - name: ${{ env.NAME }}
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y curl g++ libmpc-dev make flex
+          echo -e "\033[32m------------------------------ ${NAME} ------------------------------\033[0m" > ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mstart:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32msystem info:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mpwd:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          pwd >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlscpu:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lscpu >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mnproc:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          nproc >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mfree -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          free -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32muname -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          uname -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlsb_release -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lsb_release -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          curl -fsSL -O https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${GCC_VERSION}.tar.gz
+          tar -zxf gcc-${GCC_VERSION}.tar.gz
+          rm gcc-${GCC_VERSION}.tar.gz
+          cd gcc-releases-gcc-${GCC_VERSION}
+          mkdir build
+          cd build
+          ../configure --disable-multilib
+          echo -e "\033[32mtime make:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          (time make 2>/dev/null) 2>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v &>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdu -sh ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          du -sh ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION} >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+
+      - name: Upload ${{ env.LOG_FILE }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}
+          path: ${{ github.workspace }}/${{ env.LOG_FILE }}
+
+  gcc-15-2-0-make-j:
+    runs-on: ubuntu-latest
+    env:
+      NAME: gcc-15.2.0-make-j
+      LOG_FILE: gcc-15.2.0-make-j.log
+      GCC_VERSION: 15.2.0
+    steps:
+      - name: ${{ env.NAME }}
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y curl g++ libmpc-dev make flex
+          echo -e "\033[32m------------------------------ ${NAME}$(nproc) ------------------------------\033[0m" > ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mstart:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32msystem info:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mpwd:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          pwd >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlscpu:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lscpu >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mnproc:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          nproc >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mfree -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          free -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32muname -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          uname -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mlsb_release -a:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          lsb_release -a >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          curl -fsSL -O https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${GCC_VERSION}.tar.gz
+          tar -zxf gcc-${GCC_VERSION}.tar.gz
+          rm gcc-${GCC_VERSION}.tar.gz
+          cd gcc-releases-gcc-${GCC_VERSION}
+          mkdir build
+          cd build
+          ../configure --disable-multilib
+          echo -e "\033[32mtime make -j$(nproc):\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          (time make -j$(nproc) 2>/dev/null) 2>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v &>> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdu -sh ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          du -sh ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION} >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mdf -h:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          df -h >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo -e "\033[32mend:\033[0m" >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          date >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+          echo $'#include <bits/stdc++.h>\nint main() {\n    std::cout << "Hello World!" << std::endl;\n    return 0;\n}' > ${GITHUB_WORKSPACE}/main.cpp
+          ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ \
+            -B${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc \
+            -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/include \
+            -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/include/x86_64-pc-linux-gnu \
+            -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/libstdc++-v3/libsupc++ \
+            -L${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs \
+            -o ${GITHUB_WORKSPACE}/a.out \
+            ${GITHUB_WORKSPACE}/main.cpp
+          ${GITHUB_WORKSPACE}/a.out >> ${GITHUB_WORKSPACE}/${LOG_FILE}
+
+      - name: Upload ${{ env.LOG_FILE }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}
+          path: ${{ github.workspace }}/${{ env.LOG_FILE }}
+
+  merge-logs:
+    needs:
+      # - gcc-master-make
+      - gcc-master-make-j
+      - gcc-12-3-0-make
+      - gcc-12-3-0-make-j
+      - gcc-15-2-0-make
+      - gcc-15-2-0-make-j
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+
+      - name: merge logs
+        run: |
+          set -e
+          # cat gcc-master-make/gcc-master-make.log > gcc-build-log.txt
+          # echo >> gcc-build-log.txt
+          cat gcc-master-make-j/gcc-master-make-j.log >> gcc-build-log.txt
+          echo >> gcc-build-log.txt
+          cat gcc-12.3.0-make/gcc-12.3.0-make.log >> gcc-build-log.txt
+          echo >> gcc-build-log.txt
+          cat gcc-12.3.0-make-j/gcc-12.3.0-make-j.log >> gcc-build-log.txt
+          echo >> gcc-build-log.txt
+          cat gcc-15.2.0-make/gcc-15.2.0-make.log >> gcc-build-log.txt
+          echo >> gcc-build-log.txt
+          cat gcc-15.2.0-make-j/gcc-15.2.0-make-j.log >> gcc-build-log.txt
+          cat gcc-build-log.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gcc-build-log
+          path: gcc-build-log.txt
